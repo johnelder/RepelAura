@@ -30,7 +30,7 @@ public final class RestrictedAreaAura extends JavaPlugin implements Listener {
 	    saveConfig();
 	    reload();
 	    
-		this.getCommand("mycmd").setExecutor(new Commands(this));
+		this.getCommand("restrictedareaaura").setExecutor(new Commands(this));
 		BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
@@ -41,7 +41,7 @@ public final class RestrictedAreaAura extends JavaPlugin implements Listener {
 		
 		Bukkit.getPluginManager().registerEvents(this, this);
 		
-		u.debug("Testing");
+		
         
     }
     
@@ -55,6 +55,7 @@ public final class RestrictedAreaAura extends JavaPlugin implements Listener {
 		reloadConfig();
 		config = getConfig();
 		msgs = config.getConfigurationSection("messages").getValues(true);
+		u.debug(msgs.get("prefix").toString() + " reloaded.");
 		return true;     
     }
 

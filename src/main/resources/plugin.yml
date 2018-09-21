@@ -7,7 +7,7 @@ author: "Civalo"
 commands:
    restrictedareaaura:
       description: This is a demo command. (no requirements)
-      aliases: [raa]
+      aliases: [raa, raura]
       usage: 
       permission: 
       permission-message: "You don't have <permission>"

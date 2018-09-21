@@ -4,5 +4,6 @@
 debug: false
 max_radius: 50
 messages:
-   prefix: '[Restricted] '
-   restricted: 'You do not have permission to be in this area.'
+   prefix: '[Restricted]'
+   default_aura_message: 'You do not have permission to be in this area.'
+   players_only: 'This command can only be run by a player.'
