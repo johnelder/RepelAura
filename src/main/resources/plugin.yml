@@ -2,12 +2,13 @@ name: RestrictedAreaAura
 main: com.civservers.plugins.restrictedAreaAura.RestrictedAreaAura
 #com.example.plugins.MyPlugin
 version: 0.0.1
-
+description: A simple plugin to keep other players away when you are working on important tasks. i.e streaming
 author: "Civalo"
+website: https://github.com/johnelder/RestrictedAreaAura
+prefix: RestrictedAura
+
+
 commands:
    restrictedareaaura:
-      description: This is a demo command. (no requirements)
+      description: Base command for all functions in the plugin.
       aliases: [raa, raura]
-      usage: 
-      permission: 
-      permission-message: "You don't have <permission>"

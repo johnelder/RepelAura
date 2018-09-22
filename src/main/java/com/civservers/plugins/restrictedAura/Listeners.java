@@ -1,4 +1,4 @@
-package com.civservers.plugins.restrictedAreaAura;
+package com.civservers.plugins.restrictedAura;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ public class Listeners implements Listener {
     		Player victim = (Player) event.getEntity();
     		Player culprit = (Player) event.getDamager();
 
-    		pl.u.debug(culprit.getDisplayName().toString() + " hit " + victim.getDisplayName().toString());
+    		//pl.debug(culprit.getDisplayName().toString() + " hit " + victim.getDisplayName().toString());
     		
     		//Cancel damage
     		if ((boolean) pl.config.get("cancelPVPDamage")) {

@@ -1,4 +1,4 @@
-# REstrictedAreaAura by Civalo
+# RestrictedAreaAura by Civalo
 # Spigot URL:   Github:  
 # License: GNU Lesser General Public License v3  
 debug: false
@@ -7,3 +7,19 @@ messages:
    prefix: '[Restricted]'
    default_aura_message: 'You do not have permission to be in this area.'
    players_only: 'This command can only be run by a player.'
+   created: 'Your aura has been created and enabled.'
+   deleted: 'Your aura has been deleted.'
+   disabled: 'Your aura has been disabled. Use /raa enable to re-enable it.'
+   enabled: 'Your aura has been enabled.'
+   no_aura: 'You do not have an aura to delete.'
+   alread: 'You already have an aura created.'
+   permission: 'You do not have permission to use that command.'
+   help: |
+      /raa create <range> <denied message> - Creates a new restricted area around you.
+      /raa delete - Deletes your current aura.
+      /raa disable - Disabled your aura allowing everyone in.
+      /raa enable - Re-enables your aura.
+      /raa trust <player name> - Allows a specific player into your aura.
+      /raa untrust <player name> - Removes a player from the trusted list.
+      /raa trustlist - Displays a list of all players that you have allowed in.
+
