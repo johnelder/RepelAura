@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 
 
 public class Commands implements CommandExecutor {
-	private final RestrictedAreaAura plugin;
+	private final RestrictedAura plugin;
 	
-	public Commands(RestrictedAreaAura plugin) {
+	public Commands(RestrictedAura plugin) {
 		this.plugin = plugin;
 	}
 	

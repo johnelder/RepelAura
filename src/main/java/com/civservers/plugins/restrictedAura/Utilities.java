@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 
 public class Utilities {	
-	private RestrictedAreaAura plugin;
+	private RestrictedAura plugin;
 	
-	public Utilities(RestrictedAreaAura plugin) {
+	public Utilities(RestrictedAura plugin) {
 		this.plugin = plugin;
 	}
 	

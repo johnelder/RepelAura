@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Listeners implements Listener {
 	
-	private RestrictedAreaAura pl;
+	private RestrictedAura pl;
 	
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event){    	

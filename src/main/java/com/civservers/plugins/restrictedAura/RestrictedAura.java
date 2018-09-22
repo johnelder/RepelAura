@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class RestrictedAreaAura extends JavaPlugin {
+public final class RestrictedAura extends JavaPlugin {
 	
 	public FileConfiguration config = getConfig();
 	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
