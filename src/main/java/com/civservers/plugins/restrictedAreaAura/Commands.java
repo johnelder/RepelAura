@@ -9,52 +9,66 @@ import org.bukkit.entity.Player;
 
 
 
+
+
 public class Commands implements CommandExecutor {
-	private final RestrictedAreaAura pl;
-	private Utilities u;
+	private final RestrictedAreaAura plugin;
 	
-	public Commands(RestrictedAreaAura pl) {
-		this.pl = pl;
+	public Commands(RestrictedAreaAura plugin) {
+		this.plugin = plugin;
 	}
 	
 	
+//	public Utilities u;
 	
-
-
 	@Override	
-	public boolean onCommand(CommandSender csender, Command cmd, String label, String[] args) {
-		u.debug(pl.msgs.toString());
-		if (csender instanceof Player) {
-			Player sender = (Player) csender;
-			String s_uuid = sender.getUniqueId().toString(); 
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		Utilities Util = new Utilities(plugin);
+		
+		if (sender instanceof Player) {
+			Player s_player = (Player) sender;
+			String s_uuid = s_player.getUniqueId().toString(); 
 	    	if (cmd.getName().equalsIgnoreCase("restrictedareaaura")) {
-	    		if (args.length >= 1) {
-	    			if (args[0].equalsIgnoreCase("start")) {
-	    				if (args.length >= 2) {
-	    					if (u.isValidNumber(args[1])) {
-	    						u.debug("arg 1 is number");
-	    					} else {
-	    						//TODO msg please enter a number from 1 to ... (/raa start <radius> ['message to players'])
-	    					}
-	    				}
-	    			} else if (args[0].equalsIgnoreCase("stop")) {
-	    				if (pl.config.contains("auras." + s_uuid)) {
-	    					pl.config.set("auras." + s_uuid, null);
-	    				}
-	    			} else if (args[0].equalsIgnoreCase("pause")) {
-	    			} else if (args[0].equalsIgnoreCase("resume")) {
-	    			} else if (args[0].equalsIgnoreCase("allow")) {
-	    			} else if (args[0].equalsIgnoreCase("deny")) {
-	    				
-	    			}
+	    		if (s_player.hasPermission("restrictedaura.use") || s_player.hasPermission("restrictedaura.admin")) {
+		    		if (args.length >= 1) {
+		    			if (args[0].equalsIgnoreCase("create")) {
+		    				
+		    				
+		    				
+		    			} else if (args[0].equalsIgnoreCase("delete")) {
+		    				if (plugin.config.contains("auras." + s_uuid)) {
+		    					plugin.config.set("auras." + s_uuid, null);
+		    					plugin.saveConfig();
+		    				} else {
+		    					Util.sendPlayer(s_player, plugin.msgs.get("no_aura").toString());
+		    				}
+		    			} else if (args[0].equalsIgnoreCase("enable")) {
+		    				
+		    			} else if (args[0].equalsIgnoreCase("disable")) {
+		    				
+		    			} else if (args[0].equalsIgnoreCase("trust")) {
+		    				
+		    			} else if (args[0].equalsIgnoreCase("untrust")) {
+		    				
+		    			} else if (args[0].equalsIgnoreCase("trustlist")) {
+		    				
+		    			} else if (args[0].equalsIgnoreCase("reload")) {
+		    				plugin.reload();
+		    				Util.sendPlayer(s_player, ChatColor.GREEN + "---- Config Reloaded ----");
+		    			} else {
+		    				Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("help").toString());
+		    			}
+		    		} else {
+		    			Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("help").toString());
+		    			return false;
+		    		}
+	    		return true;
 	    		} else {
-	    			
-	    			return false;
+	    			Util.sendPlayer(s_player, ChatColor.RED + plugin.msgs.get("permission").toString());
 	    		}
-	    		return true;   		
 	    	}
 		} else {
-			u.sendConsole(ChatColor.RED + "" + pl.msgs.get("players_only").toString());
+			Util.sendConsole(ChatColor.RED + plugin.msgs.get("players_only").toString());
 		}
 		return false;
 	}
