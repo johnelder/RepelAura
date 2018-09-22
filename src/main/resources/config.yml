@@ -2,6 +2,7 @@
 # Spigot URL: Coming Soon to SpigotMC.com   Github: https://github.com/johnelder/RestrictedAura
 # License: GNU Lesser General Public License v3  
 debug: false
+debug_effect_villagers: true
 max_radius: 50
 show_admin_actions: true
 messages:
