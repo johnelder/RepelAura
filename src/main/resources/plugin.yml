@@ -1,5 +1,5 @@
 name: RestrictedAreaAura
-main: com.civservers.plugins.restrictedAreaAura.RestrictedAreaAura
+main: com.civservers.plugins.restrictedAura.RestrictedAura
 #com.example.plugins.MyPlugin
 version: 0.0.1
 description: A simple plugin to keep other players away when you are working on important tasks. i.e streaming
