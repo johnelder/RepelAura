@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public final class RestrictedAura extends JavaPlugin {
 	
@@ -14,23 +15,28 @@ public final class RestrictedAura extends JavaPlugin {
 	
 	Utilities Util = new Utilities(this);
 
+
 	@Override
     public void onEnable() {
-		
+		Object players;
 		
 		config.options().copyDefaults(true);
 	    saveConfig();
 	    reload();
 	    
+	    
+	    
 	    this.getCommand("restrictedareaaura").setExecutor(new Commands(this));
-		
-//		BukkitScheduler scheduler = getServer().getScheduler();
-//        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-//            @Override
-//            public void run() {
-//                
-//            }
-//        }, 0L, 100L);
+		Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
+	    
+	    
+		BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                
+            }
+        }, 0L, 200L);
 		
 //		Bukkit.getPluginManager().registerEvents(this, this);
 		
