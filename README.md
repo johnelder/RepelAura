@@ -2,6 +2,7 @@
 **Description:** 
 
 **Latest Version:** 1.0.0
+
 **Tested On:** Spigot 1.13.1
 
 ## Commands
@@ -18,6 +19,8 @@ Aliases: /RepelAura or /raura or /raura
 
 
 ## Permissions
+- repelaura.use (create and modify your own aura)
+- repelaura.admin (create and modify other player's auras, reload config file)
 
 
 ## Default Config File
@@ -82,7 +85,7 @@ We appreciate any contributions.
 - Please make submissions via pull requests on GitHub. 
 - Please licensed submissions under GNU Lesser General Public License v3.
 ## Links
-**Spigot Resource Listing:** Will be updated on release.
+**Spigot Resource Listing:** [https://www.spigotmc.org/resources/repelaura.61050/](https://www.spigotmc.org/resources/repelaura.61050/)
 
 **Issues:** [https://github.com/johnelder/RepelAura/issues](https://github.com/johnelder/RepelAura/issues)
 
