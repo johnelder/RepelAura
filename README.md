@@ -1,7 +1,7 @@
 # RepelAura
 ![alt text](https://raw.githubusercontent.com/johnelder/RepelAura/master/RepelAuraIconSmall.jpg "RepelAura")
 
-**Description:** 
+**Description:** Basic plugin for keeping other players away from your area while you work. Designed for streaming, preventing harassment and playing online with younger kids.
 
 **Latest Version:** 1.0.0
 
