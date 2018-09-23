@@ -1,4 +1,6 @@
 # RepelAura
+![alt text](https://raw.githubusercontent.com/johnelder/RepelAura/master/RepelAuraIconSmall.jpg "RepelAura")
+
 **Description:** 
 
 **Latest Version:** 1.0.0
