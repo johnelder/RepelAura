@@ -1,4 +1,4 @@
-package com.civservers.plugins.restrictedAura;
+package com.civservers.plugins.repelAura;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
-public final class RestrictedAura extends JavaPlugin {
+public final class RepelAura extends JavaPlugin {
 	
 	public FileConfiguration config = getConfig();
 	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
@@ -29,7 +29,8 @@ public final class RestrictedAura extends JavaPlugin {
 
 	public Collection<? extends Player> onlinePlayers;
 	
-	public Double defPower;
+	public Integer maxPower;
+	public Integer minPower;
 	public Long repelDelay;
 	
 	
@@ -40,14 +41,9 @@ public final class RestrictedAura extends JavaPlugin {
 		config.options().copyDefaults(true);
 	    saveConfig();
 	    reload();
-	    
-	    Util.debug("Power:" + defPower.toString());
-	    
-	    
+	    	    
 	    this.getCommand("restrictedareaaura").setExecutor(new Commands(this));
 		Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
-	    
-		
 	    
 		BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
@@ -55,27 +51,36 @@ public final class RestrictedAura extends JavaPlugin {
             public void run() {
             	for (Player a_pl : onlinePlayers) {
             		String a_uuid = a_pl.getUniqueId().toString();
+            		// Is player using an aura?
             		if (config.contains("auras." + a_uuid)) {
+            			// Is it enabled
             			if (config.getBoolean("auras." + a_uuid + ".enabled")) {
-            				
+            				// Get needed locations and range data
 			            	Location a_loc = a_pl.getLocation();
 			            	Integer range = config.getInt("auras." + a_uuid + ".radius");
 			            	Integer rangeSquared = range * range;		            	
+
 			            	Util.debug("Range:"+range+" R2:"+rangeSquared);
 			            	
-			            	
+			            	// Run effects on villagers for testing
 			    			if (config.getBoolean("test_on_villagers")) {
-			            		Collection<Entity> villagers = Bukkit.getWorld("world").getEntitiesByClasses(Villager.class);
+			    				// Get villagers in players current world
+			            		Collection<Entity> villagers =  a_pl.getWorld().getEntitiesByClasses(Villager.class);
 			            		for (Entity ent : villagers) {
 			            			Location tloc = ent.getLocation();
 			            			Double dDist = tloc.distanceSquared(a_loc);
+			            			// Is villager in range of aura?
 			            			if (dDist < rangeSquared) {
-			            				Util.debug("Villager in range!");
-			            				Integer power = (int) ((dDist / rangeSquared) * defPower);
-			            				if (power < 5) {
-			            					power = 5;
-			            				}
-			            				Util.debug("PrePower:" + power);
+			            				
+			            				Double buffer = (1 - (dDist / rangeSquared));
+			            				Integer power = (int) (buffer * maxPower);
+			            				
+			            				Util.debug("Range: " + buffer + "%" + (buffer * maxPower));
+			            				
+			            				if (power < minPower) { power = minPower; }
+			            				
+			            				Util.debug("Power Calculated:" + power);
+			            				
 			            				repelEnt(ent,a_loc,power);
 			            			}
 			            		}
@@ -87,22 +92,31 @@ public final class RestrictedAura extends JavaPlugin {
 			        			List<String> trustList = new ArrayList<String>();
 			        	    	trustList = config.getStringList("auras." + a_uuid + "trustlist");
 			        	    	Util.debug(trustList.toString());
-			        	    	if (!trustList.contains(t_uuid)) {
+			        	    	// Skip players that are trusted
+			        	    	if (trustList.contains(t_uuid)) {
+			        	    		Util.debug("Trusted:" + t_uuid);
+			        	    	} else {
+			        	    		// Skip aura owner
 			        	    		if (!a_uuid.equals(t_uuid)) {
+			        	    			// Get target location
 					        			Location tloc = t_pl.getLocation();
 					        			Double dDist =  tloc.distanceSquared(a_loc);
-					
+					        			
+					        			// Check if target player is within aura
 					        			if (dDist < rangeSquared) {
-					        				Integer power = (int) ((dDist / rangeSquared) * defPower);
-				            				if (power < 5) {
-				            					power = 5;
-				            				}
+					        				// Calculate power and repel players
+					        				Double buffer = (1 - (dDist / rangeSquared));
+				            				Integer power = (int) (buffer * maxPower);
+				            				
+				            				Util.debug("Range: " + buffer + "%" + (buffer * maxPower));
+				            				
+				            				if (power < minPower) { power = minPower; }
+				            				
+				            				Util.debug("Power Calculated:" + power);
 					        				Util.debug(a_uuid + " vs " + t_uuid);
 					        				repelEnt(t_pl,a_loc,power);
 					        			}
 			        	    		}
-			        	    	} else {
-			        	    		Util.debug("Trusted:" + t_uuid);
 			        	    	}
 			        		}
             			} else {
@@ -116,16 +130,15 @@ public final class RestrictedAura extends JavaPlugin {
             	}
             }
         }, 0L, repelDelay);
-		
-//		Bukkit.getPluginManager().registerEvents(this, this);
-		
-
-        
+       
     }
     
     @Override
     public void onDisable() {
-    	Bukkit.getConsoleSender().sendMessage(" Unloading");
+    	if (config.getBoolean("remove_auras_on_quit")) {
+    		config.set("auras", null);
+    		saveConfig();
+    	}
     }    
     
 	public void repelEnt(Entity ent, Location from, Integer power) {
@@ -133,8 +146,10 @@ public final class RestrictedAura extends JavaPlugin {
 		Vector vel = dir.normalize().add(new Vector(0,0.2,0));
 		vel = vel.multiply(power);
 		ent.setVelocity(vel);
-		((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 6, 1) );
-		
+		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration"), config.getInt("potion_amplifier")) );
+		if (tryPotion) {
+			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration") + config.getInt("potion_amplifier"));
+		}
 		Util.debug("Vectoring Entity: " + vel.getX() + ":" + vel.getY() + ":" + vel.getZ() + " Power:" + power);
 	}
     
@@ -148,9 +163,10 @@ public final class RestrictedAura extends JavaPlugin {
 		config = getConfig();
 		msgs = config.getConfigurationSection("messages").getValues(true);
 		onlinePlayers = Bukkit.getOnlinePlayers();
-		defPower = config.getDouble("repel_power");
+		maxPower = config.getInt("max_power");
+		minPower = config.getInt("min_power");
 		repelDelay = config.getLong("repel_delay_seconds") * 20L;
-		debug("Config Reloaded - repelDelay:" + repelDelay + " default power:" + defPower);
+		debug("Config Reloaded - repelDelay:" + repelDelay + " default power:" + maxPower);
 		return true;     
     }
 

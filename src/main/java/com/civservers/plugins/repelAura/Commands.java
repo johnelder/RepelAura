@@ -1,4 +1,4 @@
-package com.civservers.plugins.restrictedAura;
+package com.civservers.plugins.repelAura;
 
 import java.util.UUID;
 
@@ -14,9 +14,9 @@ import org.bukkit.entity.Player;
 
 
 public class Commands implements CommandExecutor {
-	private final RestrictedAura plugin;
+	private final RepelAura plugin;
 	
-	public Commands(RestrictedAura plugin) {
+	public Commands(RepelAura plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -126,9 +126,7 @@ public class Commands implements CommandExecutor {
 		    				
 		    				
 		    				
-		    				
-		    				
-		    				
+
 		    			} else if (args[0].equalsIgnoreCase("enable")) {
 		    				if (args.length >= 2) {
 		    					
@@ -167,7 +165,6 @@ public class Commands implements CommandExecutor {
 			    					Util.sendPlayer(s_player, plugin.msgs.get("no_aura").toString());
 			    				}
 		    				}
-		    				
 		    				
 		    				
 		    				
@@ -244,6 +241,9 @@ public class Commands implements CommandExecutor {
 		    				}
 		    				
 		    				
+		    				
+		    			
+		    			/* display list of players that are trusted inside aura */
 		    			} else if (args[0].equalsIgnoreCase("trustlist")) {
 		    				if (plugin.config.contains("auras." + s_uuid)) {
 								String[] trustList = plugin.config.getStringList("auras." + s_uuid + ".trustlist").toArray(new String[0]);
@@ -269,9 +269,7 @@ public class Commands implements CommandExecutor {
 		    			}
 		    		} else {
 		    			Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("help").toString());
-		    			return false;
 		    		}
-	    		return true;
 	    		} else {
 	    			Util.sendPlayer(s_player, ChatColor.RED + plugin.msgs.get("permission").toString());
 	    		}
@@ -279,7 +277,7 @@ public class Commands implements CommandExecutor {
 		} else {
 			Util.sendConsole(ChatColor.RED + plugin.msgs.get("players_only").toString());
 		}
-		return false;
+		return true;
 	}
 	
 }

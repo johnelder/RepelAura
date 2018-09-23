@@ -1,4 +1,4 @@
-package com.civservers.plugins.restrictedAura;
+package com.civservers.plugins.repelAura;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,9 +12,9 @@ import org.bukkit.entity.Player;
 
 
 public class Utilities {	
-	private RestrictedAura plugin;
+	private RepelAura plugin;
 	
-	public Utilities(RestrictedAura plugin) {
+	public Utilities(RepelAura plugin) {
 		this.plugin = plugin;
 	}
 	
