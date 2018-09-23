@@ -1,14 +1,14 @@
-name: RestrictedAura
-main: com.civservers.plugins.restrictedAura.RestrictedAura
-#com.example.plugins.MyPlugin
+name: RepelAura
+main: com.civservers.plugins.repelAura.RepelAura
+
 version: 0.0.1
-description: A simple plugin to keep other players away when you are working on important tasks. i.e streaming
+description: A simple plugin to keep other players away when you are working on important tasks. i.e streaming, creative building, or just playing with your younger kids.
 author: "Civalo"
-website: https://github.com/johnelder/RestrictedAreaAura
-prefix: RestrictedAura
+website: https://github.com/johnelder/RepelAura
+prefix: RepelAura
 
 
 commands:
-   restrictedareaaura:
+   repelaura:
       description: Base command for all functions in the plugin.
-      aliases: [raa, raura]
+      aliases: [raura, raa]

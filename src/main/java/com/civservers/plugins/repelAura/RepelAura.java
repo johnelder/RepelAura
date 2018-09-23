@@ -146,9 +146,9 @@ public final class RepelAura extends JavaPlugin {
 		Vector vel = dir.normalize().add(new Vector(0,0.2,0));
 		vel = vel.multiply(power);
 		ent.setVelocity(vel);
-		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration"), config.getInt("potion_amplifier")) );
+		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration") * 20, config.getInt("potion_amplifier")) );
 		if (tryPotion) {
-			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration") + config.getInt("potion_amplifier"));
+			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration") + ":" + config.getInt("potion_amplifier"));
 		}
 		Util.debug("Vectoring Entity: " + vel.getX() + ":" + vel.getY() + ":" + vel.getZ() + " Power:" + power);
 	}

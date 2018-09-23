@@ -9,10 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
-
-
-
 public class Commands implements CommandExecutor {
 	private final RepelAura plugin;
 	
@@ -21,8 +17,6 @@ public class Commands implements CommandExecutor {
 	}
 	
 	
-//	public Utilities u;
-	
 	@Override	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Utilities Util = new Utilities(plugin);
@@ -30,8 +24,8 @@ public class Commands implements CommandExecutor {
 		if (sender instanceof Player) {
 			Player s_player = (Player) sender;
 			String s_uuid = s_player.getUniqueId().toString(); 
-	    	if (cmd.getName().equalsIgnoreCase("restrictedareaaura")) {
-	    		if (s_player.hasPermission("restrictedaura.use") || s_player.hasPermission("restrictedaura.admin")) {
+	    	if (cmd.getName().equalsIgnoreCase("repelaura")) {
+	    		if (s_player.hasPermission("repelaura.use") || s_player.hasPermission("repelaura.admin")) {
 		    		if (args.length >= 1) {
 		    			
 		    			
@@ -39,7 +33,7 @@ public class Commands implements CommandExecutor {
 		    				if (args.length >= 3) {
 		    					
 		    					/* Creating other player's aura */
-		    					if (s_player.hasPermission("restrictedaura.admin")) {
+		    					if (s_player.hasPermission("repelaura.admin")) {
 		    						String t_uuid = Util.getOnlineUUID(args[2]);
 		    						if (!t_uuid.equals("not found")) {
 				    					if (!plugin.config.contains("auras." + t_uuid)) {
@@ -96,7 +90,7 @@ public class Commands implements CommandExecutor {
 		    				if (args.length >= 2) {
 		    					
 		    					// Deleting other player aura
-		    					if (s_player.hasPermission("restrictedaura.admin")) {
+		    					if (s_player.hasPermission("repelaura.admin")) {
 		    						String t_uuid = Util.getOnlineUUID(args[1]);
 				    				if (plugin.config.contains("auras." + t_uuid)) {
 				    					plugin.config.set("auras." + t_uuid, null);
@@ -131,7 +125,7 @@ public class Commands implements CommandExecutor {
 		    				if (args.length >= 2) {
 		    					
 		    					/* Enabling other player aura */
-		    					if (s_player.hasPermission("restrictedaura.admin")) {
+		    					if (s_player.hasPermission("repelaura.admin")) {
 		    						String t_uuid = Util.getOnlineUUID(args[1]);
 		    						if (plugin.config.contains("auras." + t_uuid)) {
 				    					if (!plugin.config.get("auras." + t_uuid + ".enabled").equals(true)) {
@@ -172,7 +166,7 @@ public class Commands implements CommandExecutor {
 		    			} else if (args[0].equalsIgnoreCase("disable")) {
 		    				if (args.length >= 2) {
 		    					/* Disabling other player's aura */
-		    					if (s_player.hasPermission("restrictedaura.admin")) {
+		    					if (s_player.hasPermission("repelaura.admin")) {
 		    						String t_uuid = Util.getOnlineUUID(args[1]);
 		    						if (plugin.config.contains("auras." + t_uuid)) {
 				    					if (!plugin.config.get("auras." + t_uuid + ".enabled").equals(false)) {
@@ -223,6 +217,9 @@ public class Commands implements CommandExecutor {
 		    					Util.sendPlayer(s_player, plugin.msgs.get("no_aura").toString());
 		    				}
 		    				
+		    				
+		    				
+		    				
 		    			} else if (args[0].equalsIgnoreCase("untrust")) {
 		    				if (plugin.config.contains("auras." + s_uuid)) {
 		    					if (args.length >= 2) {
@@ -258,7 +255,7 @@ public class Commands implements CommandExecutor {
 		    					Util.sendPlayer(s_player, plugin.msgs.get("no_aura").toString());
 		    				}
 		    			} else if (args[0].equalsIgnoreCase("reload")) {
-		    				if (s_player.hasPermission("restrictedaura.admin")) {
+		    				if (s_player.hasPermission("repelaura.admin")) {
 			    				plugin.reload();
 			    				Util.sendPlayer(s_player, ChatColor.GREEN + "---- Config Reloaded ----");
 		    				} else {
