@@ -29,7 +29,7 @@ Aliases: /RepelAura or /raura or /raura
 
 ```
 # RepelAura by Civalo
-# Spigot URL: Coming Soon to SpigotMC.com   Github: https://github.com/johnelder/RepelAura
+# Spigot URL: https://www.spigotmc.org/resources/repelaura.61050/   Github: https://github.com/johnelder/RepelAura
 # License: GNU Lesser General Public License v3  
 debug: false
 test_on_villagers: false
