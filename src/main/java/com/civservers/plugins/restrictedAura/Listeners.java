@@ -1,5 +1,6 @@
 package com.civservers.plugins.restrictedAura;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -15,10 +16,11 @@ public class Listeners implements Listener {
 	
 	Utilities Util = new Utilities(plugin);
 	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
-		plugin.Util.debug("A Player has Joined");
-	}
+//	@EventHandler
+//	public void onJoin(PlayerJoinEvent event) {
+//		plugin.Util.debug("A Player has Joined");
+//		plugin.onlinePlayers = Bukkit.getOnlinePlayers();
+//	}
 	
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event){    	

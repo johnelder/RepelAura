@@ -45,7 +45,7 @@ public class Commands implements CommandExecutor {
 				    					if (!plugin.config.contains("auras." + t_uuid)) {
 				    						if (args.length >= 3) {
 				    							if (Util.isValidNumber(args[1])) {
-					    							plugin.config.set("auras." + t_uuid + ".radius", args[1]);
+					    							plugin.config.set("auras." + t_uuid + ".radius", Integer.parseInt(args[1]));
 					    							plugin.config.set("auras." + t_uuid + ".enabled", true);
 					    							plugin.saveConfig();
 					    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
@@ -73,7 +73,7 @@ public class Commands implements CommandExecutor {
 		    					if (!plugin.config.contains("auras." + s_uuid)) {
 		    						if (args.length >= 2) {
 		    							if (Util.isValidNumber(args[1])) {
-			    							plugin.config.set("auras." + s_uuid + ".radius", args[1]);
+			    							plugin.config.set("auras." + s_uuid + ".radius", Integer.parseInt(args[1]));
 			    							plugin.config.set("auras." + s_uuid + ".enabled", true);
 			    							plugin.saveConfig();
 			    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
@@ -98,7 +98,6 @@ public class Commands implements CommandExecutor {
 		    					// Deleting other player aura
 		    					if (s_player.hasPermission("restrictedaura.admin")) {
 		    						String t_uuid = Util.getOnlineUUID(args[1]);
-				    				Player t_player = Bukkit.getPlayer(UUID.fromString(t_uuid));
 				    				if (plugin.config.contains("auras." + t_uuid)) {
 				    					plugin.config.set("auras." + t_uuid, null);
 				    					plugin.saveConfig();

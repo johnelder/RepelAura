@@ -1,4 +1,4 @@
-name: RestrictedAreaAura
+name: RestrictedAura
 main: com.civservers.plugins.restrictedAura.RestrictedAura
 #com.example.plugins.MyPlugin
 version: 0.0.1

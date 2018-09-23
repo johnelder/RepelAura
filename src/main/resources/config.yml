@@ -2,9 +2,13 @@
 # Spigot URL: Coming Soon to SpigotMC.com   Github: https://github.com/johnelder/RestrictedAura
 # License: GNU Lesser General Public License v3  
 debug: false
-debug_effect_villagers: true
+test_on_villagers: true
 max_radius: 50
+repel_power: 15
+repel_delay_seconds: 2
 show_admin_actions: true
+
+
 messages:
    prefix: '[Restricted]'
    aura_message: 'You do not have permission to be in this area.'

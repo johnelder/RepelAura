@@ -1,4 +1,5 @@
-com\civservers\plugins\restrictedAura\Commands.class
-com\civservers\plugins\restrictedAura\Utilities.class
 com\civservers\plugins\restrictedAura\RestrictedAura.class
 com\civservers\plugins\restrictedAura\Listeners.class
+com\civservers\plugins\restrictedAura\Commands.class
+com\civservers\plugins\restrictedAura\RestrictedAura$1.class
+com\civservers\plugins\restrictedAura\Utilities.class
