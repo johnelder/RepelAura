@@ -17,6 +17,7 @@ public class Listeners implements Listener {
 	
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+    	
     	Player quitter = event.getPlayer();
     	String q_uuid = quitter.getUniqueId().toString();
     	if (plugin.config.contains("auras." + q_uuid)) {

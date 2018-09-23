@@ -1,7 +1,7 @@
 name: RepelAura
 main: com.civservers.plugins.repelAura.RepelAura
 
-version: 0.0.1
+version: 1.0.0
 description: A simple plugin to keep other players away when you are working on important tasks. i.e streaming, creative building, or just playing with your younger kids.
 author: "Civalo"
 website: https://github.com/johnelder/RepelAura

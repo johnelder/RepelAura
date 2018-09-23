@@ -39,10 +39,16 @@ public class Commands implements CommandExecutor {
 				    					if (!plugin.config.contains("auras." + t_uuid)) {
 				    						if (args.length >= 3) {
 				    							if (Util.isValidNumber(args[1])) {
-					    							plugin.config.set("auras." + t_uuid + ".radius", Integer.parseInt(args[1]));
-					    							plugin.config.set("auras." + t_uuid + ".enabled", true);
-					    							plugin.saveConfig();
-					    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
+				    								Integer radius = Integer.parseInt(args[1]);
+				    								Integer maxRadius = plugin.config.getInt("max_radius");
+				    								if (radius > maxRadius) {
+				    									Util.sendPlayer(s_player, plugin.msgs.get("aura_too_big").toString());
+				    								} else {
+						    							plugin.config.set("auras." + t_uuid + ".radius", Integer.parseInt(args[1]));
+						    							plugin.config.set("auras." + t_uuid + ".enabled", true);
+						    							plugin.saveConfig();
+						    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
+				    								}
 					    							if (plugin.config.getBoolean("show_admin_actions")) {
 					    								Util.sendPlayer(Bukkit.getPlayer(UUID.fromString(t_uuid)), ChatColor.GREEN + plugin.msgs.get("created_by_admin").toString());
 					    							}
@@ -67,10 +73,16 @@ public class Commands implements CommandExecutor {
 		    					if (!plugin.config.contains("auras." + s_uuid)) {
 		    						if (args.length >= 2) {
 		    							if (Util.isValidNumber(args[1])) {
-			    							plugin.config.set("auras." + s_uuid + ".radius", Integer.parseInt(args[1]));
-			    							plugin.config.set("auras." + s_uuid + ".enabled", true);
-			    							plugin.saveConfig();
-			    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
+		    								Integer radius = Integer.parseInt(args[1]);
+		    								Integer maxRadius = plugin.config.getInt("max_radius");
+		    								if (radius > maxRadius) {
+		    									Util.sendPlayer(s_player, plugin.msgs.get("aura_too_big").toString());
+		    								} else {
+				    							plugin.config.set("auras." + s_uuid + ".radius", Integer.parseInt(args[1]));
+				    							plugin.config.set("auras." + s_uuid + ".enabled", true);
+				    							plugin.saveConfig();
+				    							Util.sendPlayer(s_player, ChatColor.GREEN + plugin.msgs.get("created").toString());
+		    								}
 		    							} else {
 		    								Util.sendPlayer(s_player, ChatColor.RED + plugin.msgs.get("need_args").toString());
 		    							}

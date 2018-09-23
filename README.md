@@ -1,7 +1,7 @@
 # RepelAura
 **Description:** 
 
-**Latest Version:** 0.0.1
+**Latest Version:** 1.0.0
 **Tested On:** Spigot 1.13.1
 
 ## Commands

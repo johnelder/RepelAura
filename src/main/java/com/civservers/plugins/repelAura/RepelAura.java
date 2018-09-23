@@ -7,7 +7,6 @@ import java.util.Map;
 
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -19,6 +18,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
+
+import net.md_5.bungee.api.ChatColor;
 
 public final class RepelAura extends JavaPlugin {
 	
@@ -42,7 +43,7 @@ public final class RepelAura extends JavaPlugin {
 	    saveConfig();
 	    reload();
 	    	    
-	    this.getCommand("restrictedareaaura").setExecutor(new Commands(this));
+	    this.getCommand("repelaura").setExecutor(new Commands(this));
 		Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
 	    
 		BukkitScheduler scheduler = getServer().getScheduler();
@@ -59,8 +60,6 @@ public final class RepelAura extends JavaPlugin {
 			            	Location a_loc = a_pl.getLocation();
 			            	Integer range = config.getInt("auras." + a_uuid + ".radius");
 			            	Integer rangeSquared = range * range;		            	
-
-			            	Util.debug("Range:"+range+" R2:"+rangeSquared);
 			            	
 			            	// Run effects on villagers for testing
 			    			if (config.getBoolean("test_on_villagers")) {
@@ -90,14 +89,15 @@ public final class RepelAura extends JavaPlugin {
 			        		for (Player t_pl : onlinePlayers) {
 			        			String t_uuid = t_pl.getUniqueId().toString();
 			        			List<String> trustList = new ArrayList<String>();
-			        	    	trustList = config.getStringList("auras." + a_uuid + "trustlist");
-			        	    	Util.debug(trustList.toString());
+			        	    	trustList = config.getStringList("auras." + a_uuid + ".trustlist");
+			        	    	
 			        	    	// Skip players that are trusted
 			        	    	if (trustList.contains(t_uuid)) {
-			        	    		Util.debug("Trusted:" + t_uuid);
+
 			        	    	} else {
 			        	    		// Skip aura owner
 			        	    		if (!a_uuid.equals(t_uuid)) {
+			        	    			
 			        	    			// Get target location
 					        			Location tloc = t_pl.getLocation();
 					        			Double dDist =  tloc.distanceSquared(a_loc);
@@ -123,10 +123,6 @@ public final class RepelAura extends JavaPlugin {
             				Util.debug("Not enabled");
             			}
             		}
-	        		
-	        		
-	        		
-	        		
             	}
             }
         }, 0L, repelDelay);
@@ -146,18 +142,18 @@ public final class RepelAura extends JavaPlugin {
 		Vector vel = dir.normalize().add(new Vector(0,0.2,0));
 		vel = vel.multiply(power);
 		ent.setVelocity(vel);
-		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration") * 20, config.getInt("potion_amplifier")) );
+		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration_seconds") * 20, config.getInt("potion_amplifier")) );
+		
+		if (ent instanceof Player) {
+			Util.sendPlayer((Player) ent,ChatColor.RED + msgs.get("repel_message").toString());
+		}
+		
 		if (tryPotion) {
-			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration") + ":" + config.getInt("potion_amplifier"));
+			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration_seconds") + ":" + config.getInt("potion_amplifier"));
 		}
 		Util.debug("Vectoring Entity: " + vel.getX() + ":" + vel.getY() + ":" + vel.getZ() + " Power:" + power);
 	}
     
-    public void debug(String dString) {
-    	if (config.getBoolean("debug")) {
-    		Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + msgs.get("prefix").toString() + " [DEBUG]" + " " + dString);
-    	}
-    }
     public boolean reload() {
 		reloadConfig();
 		config = getConfig();
@@ -166,7 +162,7 @@ public final class RepelAura extends JavaPlugin {
 		maxPower = config.getInt("max_power");
 		minPower = config.getInt("min_power");
 		repelDelay = config.getLong("repel_delay_seconds") * 20L;
-		debug("Config Reloaded - repelDelay:" + repelDelay + " default power:" + maxPower);
+		Util.debug("Config Reloaded - repelDelay:" + repelDelay + " default power:" + maxPower);
 		return true;     
     }
 

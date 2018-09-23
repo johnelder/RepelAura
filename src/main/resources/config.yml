@@ -11,11 +11,13 @@ show_admin_actions: true
 potion: SLOW_FALLING
 potion_duration_seconds: 10
 potion_amplifier: 8
+remove_auras_on_quit: true
 
 messages:
    prefix: '[RepelAura]'
-   aura_message: 'You do not have permission to be in this area.'
+   repel_message: 'You do not have permission to be in this area.'
    players_only: 'This command can only be run by a player.'
+   aura_too_big: 'Aura too large.  Please create a smaller one.'
    created: 'Aura has been created and enabled.'
    created_by_admin: 'Aura has been created and enabled by an admin.'
    deleted: 'Aura has been deleted.'
