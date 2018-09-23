@@ -1,5 +1,6 @@
 com\civservers\plugins\repelAura\Utilities.class
 com\civservers\plugins\repelAura\RepelAura.class
+com\civservers\plugins\repelAura\RepelAura$2.class
 com\civservers\plugins\repelAura\Listeners.class
 com\civservers\plugins\repelAura\Commands.class
 com\civservers\plugins\repelAura\RepelAura$1.class

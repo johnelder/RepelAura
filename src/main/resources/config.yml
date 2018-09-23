@@ -1,6 +1,7 @@
 # RepelAura by Civalo
 # Spigot URL: Coming Soon to SpigotMC.com   Github: https://github.com/johnelder/RepelAura
 # License: GNU Lesser General Public License v3  
+# Potion effects available here: https://github.com/johnelder/RepelAura
 debug: false
 test_on_villagers: false
 max_radius: 50
@@ -8,6 +9,8 @@ max_power: 15
 min_power: 3
 repel_delay_seconds: 2
 show_admin_actions: true
+break_fall_damage: true
+apply_potion: true
 potion: SLOW_FALLING
 potion_duration_seconds: 10
 potion_amplifier: 8
@@ -38,6 +41,7 @@ messages:
    not_found: 'Record or Player not found.'
    need_args: 'Please provide another argument. e.g. /raura create 35, /raura trust Civalo'
    permission: 'You do not have permission to use that command.'
+   bad_potion: 'is a bad value. Please enter a valid PotionEffectType in the config.'
    help: |
       /raura create <range> - Creates a new restricted area around you.
       /raura delete - Deletes your current aura.

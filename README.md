@@ -3,9 +3,9 @@
 
 **Description:** Basic plugin for keeping other players away from your area while you work. Designed for streaming, preventing harassment and playing online with younger kids.
 
-**Latest Version:** 1.0.0
+**Latest Version:** 1.0.1
 
-**Tested On:** Spigot 1.13.1
+**Tested On:** Spigot 1.13.1, 1.12.2
 
 ## Commands
 
@@ -29,8 +29,9 @@ Aliases: /RepelAura or /raura or /raura
 
 ```
 # RepelAura by Civalo
-# Spigot URL: https://www.spigotmc.org/resources/repelaura.61050/   Github: https://github.com/johnelder/RepelAura
+# Spigot URL: Coming Soon to SpigotMC.com   Github: https://github.com/johnelder/RepelAura
 # License: GNU Lesser General Public License v3  
+# Potion effects available here: https://github.com/johnelder/RepelAura
 debug: false
 test_on_villagers: false
 max_radius: 50
@@ -38,14 +39,18 @@ max_power: 15
 min_power: 3
 repel_delay_seconds: 2
 show_admin_actions: true
+break_fall_damage: true
+apply_potion: true
 potion: SLOW_FALLING
 potion_duration_seconds: 10
 potion_amplifier: 8
+remove_auras_on_quit: true
 
 messages:
    prefix: '[RepelAura]'
-   aura_message: 'You do not have permission to be in this area.'
+   repel_message: 'You do not have permission to be in this area.'
    players_only: 'This command can only be run by a player.'
+   aura_too_big: 'Aura too large.  Please create a smaller one.'
    created: 'Aura has been created and enabled.'
    created_by_admin: 'Aura has been created and enabled by an admin.'
    deleted: 'Aura has been deleted.'
@@ -78,9 +83,72 @@ messages:
 
 
 ```
-
+## 1.13.1 Potion Options:
+```
+ABSORPTION				Increases the maximum health of an entity with health that cannot be regenerated, but is refilled every 30 seconds.
+BLINDNESS				Blinds an entity.
+CONDUIT_POWER			Effects granted by a nearby conduit.
+CONFUSION				Warps vision on the client.
+DAMAGE_RESISTANCE		Decreases damage dealt to an entity.
+DOLPHINS_GRACE			Squee'ek uh'k kk'kkkk squeek eee'eek.
+FAST_DIGGING			Increases dig speed.
+FIRE_RESISTANCE			Stops fire damage.
+GLOWING					Outlines the entity so that it can be seen from afar.
+HARM					Hurts an entity.
+HEAL					Heals an entity.
+HEALTH_BOOST			Increases the maximum health of an entity.
+HUNGER					Increases hunger.
+INCREASE_DAMAGE			Increases damage dealt.
+INVISIBILITY			Grants invisibility.
+JUMP					Increases jump height.
+LEVITATION				Causes the entity to float into the air.
+LUCK					Loot table luck.
+NIGHT_VISION			Allows an entity to see in the dark.
+POISON					Deals damage to an entity over time.
+REGENERATION			Regenerates health.
+SATURATION				Increases the food level of an entity each tick.
+SLOW					Decreases movement speed.
+SLOW_DIGGING			Decreases dig speed.
+SLOW_FALLING			Slows entity fall rate.
+SPEED					Increases movement speed.
+UNLUCK					Loot table unluck.
+WATER_BREATHING			Allows breathing underwater.
+WEAKNESS				Decreases damage dealt by an entity.
+WITHER					Deals damage to an entity over time and gives the health to the shooter.
+```
+## 1.12.2 Potion Options:
+```
+ABSORPTION				Increases the maximum health of an entity with health that cannot be regenerated, but is refilled every 30 seconds.
+BLINDNESS				Blinds an entity.
+CONFUSION				Warps vision on the client.
+DAMAGE_RESISTANCE		Decreases damage dealt to an entity.
+FAST_DIGGING			Increases dig speed.
+FIRE_RESISTANCE			Stops fire damage.
+GLOWING					Outlines the entity so that it can be seen from afar.
+HARM					Hurts an entity.
+HEAL					Heals an entity.
+HEALTH_BOOST			Increases the maximum health of an entity.
+HUNGER					Increases hunger.
+INCREASE_DAMAGE			Increases damage dealt.
+INVISIBILITY			Grants invisibility.
+JUMP					Increases jump height.
+LEVITATION				Causes the entity to float into the air.
+LUCK					Loot table luck.
+NIGHT_VISION			Allows an entity to see in the dark.
+POISON					Deals damage to an entity over time.
+REGENERATION			Regenerates health.
+SATURATION				Increases the food level of an entity each tick.
+SLOW					Decreases movement speed.
+SLOW_DIGGING			Decreases dig speed.
+SPEED					Increases movement speed.
+UNLUCK					Loot table unluck.
+WATER_BREATHING			Allows breathing underwater.
+WEAKNESS				Decreases damage dealt by an entity.
+WITHER					Deals damage to an entity over time and gives the health to the shooter.
+```
 
 ## Support
+
 We try to be available whenever possible on Discord at [https://discord.gg/W6hwDgJ](https://discord.gg/W6hwDgJ)
 ## Contributing
 We appreciate any contributions.  

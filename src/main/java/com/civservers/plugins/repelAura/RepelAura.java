@@ -27,13 +27,15 @@ public final class RepelAura extends JavaPlugin {
 	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
 	
 	Utilities Util = new Utilities(this);
-
+	BukkitScheduler scheduler = getServer().getScheduler();
+	
 	public Collection<? extends Player> onlinePlayers;
 	
 	public Integer maxPower;
 	public Integer minPower;
 	public Long repelDelay;
-	
+	public List<String> falling = new ArrayList<>();
+	public List<Entity> fallingEnt = new ArrayList<>();
 	
 	@Override
     public void onEnable() {
@@ -44,9 +46,8 @@ public final class RepelAura extends JavaPlugin {
 	    reload();
 	    	    
 	    this.getCommand("repelaura").setExecutor(new Commands(this));
-		Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
-	    
-		BukkitScheduler scheduler = getServer().getScheduler();
+		Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);		
+		
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
@@ -66,6 +67,7 @@ public final class RepelAura extends JavaPlugin {
 			    				// Get villagers in players current world
 			            		Collection<Entity> villagers =  a_pl.getWorld().getEntitiesByClasses(Villager.class);
 			            		for (Entity ent : villagers) {
+			            			
 			            			Location tloc = ent.getLocation();
 			            			Double dDist = tloc.distanceSquared(a_loc);
 			            			// Is villager in range of aura?
@@ -137,20 +139,50 @@ public final class RepelAura extends JavaPlugin {
     	}
     }    
     
-	public void repelEnt(Entity ent, Location from, Integer power) {
+	public void repelEnt(final Entity ent, Location from, Integer power) {
+		Util.debug("in repelEnt - ent#:" + ent.getEntityId());
 		Vector dir = ent.getLocation().clone().subtract(from).toVector();
 		Vector vel = dir.normalize().add(new Vector(0,0.2,0));
 		vel = vel.multiply(power);
 		ent.setVelocity(vel);
-		boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration_seconds") * 20, config.getInt("potion_amplifier")) );
+		if (config.getBoolean("apply_potion")) {
+			try {
+				boolean tryPotion = ((LivingEntity) ent).addPotionEffect(new PotionEffect(PotionEffectType.getByName(config.getString("potion")), config.getInt("potion_duration_seconds") * 20, config.getInt("potion_amplifier")) );
+				if (tryPotion) {
+					Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration_seconds") + ":" + config.getInt("potion_amplifier"));
+				}
+			} catch (Exception e) {
+				Util.debug(e.getMessage());
+				if (e.getMessage().equals("effect type cannot be null")) {
+					Util.sendConsole(ChatColor.RED + config.getString("potion") + " " + msgs.get("bad_potion").toString());
+					Util.sendConsole(ChatColor.RED + "A list of potion options can be found at: https://github.com/johnelder/RepelAura");
+				}
+			}
+		}
+		
+		if(fallingEnt.add(ent)) {
+			Util.debug("Entity added to falling group.");
+		} else {
+			Util.debug("Could not add to falling group");
+		}		
+		
+		scheduler.runTaskLater(this, new Runnable() {
+
+			@Override
+			public void run() {
+				if(fallingEnt.remove(ent)) {
+					Util.debug("Entity removed from falling group.");
+				} else {
+					Util.debug("Could not remove from falling group");
+				}
+			}
+			
+		}, 200L);
 		
 		if (ent instanceof Player) {
 			Util.sendPlayer((Player) ent,ChatColor.RED + msgs.get("repel_message").toString());
 		}
 		
-		if (tryPotion) {
-			Util.debug("Potion applied: " + config.getString("potion") + ":" + config.getInt("potion_duration_seconds") + ":" + config.getInt("potion_amplifier"));
-		}
 		Util.debug("Vectoring Entity: " + vel.getX() + ":" + vel.getY() + ":" + vel.getZ() + " Power:" + power);
 	}
     
@@ -163,6 +195,7 @@ public final class RepelAura extends JavaPlugin {
 		minPower = config.getInt("min_power");
 		repelDelay = config.getLong("repel_delay_seconds") * 20L;
 		Util.debug("Config Reloaded - repelDelay:" + repelDelay + " default power:" + maxPower);
+		Util.debug(Bukkit.getVersion().replace("(MC: ", "|").replace(")", "").split("|")[1].toString());
 		return true;     
     }
 
